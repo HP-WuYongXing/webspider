@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oliver.mapper.inter.INewsContentOperation">
+
+	<insert id="addNewsContent" parameterType="NewsContent" useGeneratedKeys="true"
+			keyProperty="id">
+	 insert into news_content(sub_title,source,title_id,time,max_length)values(
+	   #{subTitle},#{source},#{titleId},#{time},#{maxLength})
+	</insert>
+	<select id="queryListByTitileId" parameterType="int" resultMap="newsContentList">
+	 select * from news_content where title_id = #{titleId}
+	</select>
+	<resultMap type="NewsContent" id="newsContentList">
+		<id property="id" column="id"/>
+		<result property="subTitle" column="sub_title"/>
+		<result property="source" column="source"/>
+		<result property="titleId" column="title_id"/>
+		<result property="time" column="time"/>
+		<result property="maxLength" column="max_length"/>
+	</resultMap>
+</mapper>

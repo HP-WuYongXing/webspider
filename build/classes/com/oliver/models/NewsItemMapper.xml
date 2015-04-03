@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oliver.mapper.inter.INewsItemOperation">
+
+	<insert id="addNewsItem" parameterType="NewsItem" useGeneratedKeys="true"
+			keyProperty="id">
+	 insert into news_item(title,time,link,type)values(#{title},
+	   #{time},#{link},#{newsType})
+	</insert>
+	
+	<select id="selectNewsItemByID" parameterType="int" resultType="NewsItem">
+      select * from news_item where id=#{id}
+	</select>
+	
+	<select id="selectAll" resultMap="newsItemList">
+	  select * from news_item
+	</select>
+	
+	<select id="queryNewsItemsAtLimit" parameterType="int" resultMap="newsItemList">
+	select * from news_item limit #{start},20
+	</select>
+	
+	<delete id="deleteAllNewsItems">
+	 delete from news_item;
+	</delete>
+	<resultMap type="NewsItem" id="newsItemList">
+		<id property="id" column="id"/>
+		<result property="title" column="title"/>
+		<result property="time"  column="time"/>
+		<result property="link"  column="link"/>
+		<result property="newsType" column="type"/>
+	</resultMap>
+</mapper>

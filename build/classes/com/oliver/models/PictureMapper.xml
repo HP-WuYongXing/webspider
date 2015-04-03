@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oliver.mapper.inter.IPictureOperation">
+<insert id="addPicture" parameterType="Picture" useGeneratedKeys="true" keyProperty="id">
+	insert into picture(image_path,content_id,order_number)values(#{imagePath},#{contentId},#{orderNumber});
+</insert>
+<select id="queryListByContentId" parameterType="int" resultMap="pictureList">
+	select * from picture where content_id = #{contentId}
+</select>
+<resultMap type="Picture" id="pictureList">
+	<id property="id" column="id"/>
+	<result property="contentId" column="content_id"/>
+	<result property="imagePath" column="image_path"/>
+	<result property="orderNumber" column="order_number"/>
+</resultMap>
+</mapper>

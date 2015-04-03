@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oliver.mapper.inter.IParagraphOperation">
+
+<insert id="addParagraph" parameterType="Paragraph" useGeneratedKeys="true" keyProperty="id">
+	insert into paragraph(order_number,content_id,content)values(#{orderNumber},#{contentId},#{content});
+</insert>
+<select id="queryListByContentId" parameterType="int" resultMap="paragraphList">
+	select * from paragraph where content_id = #{contentId}
+</select>
+<resultMap type="Paragraph" id="paragraphList" >
+	<id property="id" column="id"/>
+	<result property="orderNumber" column="order_number"/>
+	<result property="contentId" column="content_id"/>
+	<result property="content" column="content"/>
+</resultMap>
+</mapper>
