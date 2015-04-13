@@ -6,6 +6,13 @@
   version="3.0"
   metadata-complete="true">
 
+<listener>
+	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+</listener>
+<context-param>
+	<param-name>contextConfigLocation</param-name>
+	<param-value>classpath:ApplicationContext.xml</param-value>
+</context-param>
   <display-name>spider</display-name>
   <description>
      Welcome to spider
