@@ -18,17 +18,34 @@
 	</select>
 	
 	<select id="queryNewsItemsAtLimit" parameterType="int" resultMap="newsItemList">
-	select * from news_item limit #{start},20
+	select * from news_item where type= #{1} limit #{0},20
+	</select>
+	
+	<select id="queryNewsItemsAtRandom" resultMap="newsItemList">
+	    select * from news_item where id>=
+	    (floor(rand()*((select max(id)from news_Item)-(select min(id) from news_Item))+
+	    (select min(id) from news_item))) limit 1;
+	</select>
+	
+	<select id="queyNewsItemsHeader" resultMap="newsItemList">
+		select * from news_item where type=#{0} limit 5
 	</select>
 	
 	<delete id="deleteAllNewsItems">
 	 delete from news_item;
 	</delete>
+	
+	<update id="addHotPoint" parameterType="int">
+	  update news_item set hot = hot+1 where id=#{id}
+	</update>
+	
 	<resultMap type="NewsItem" id="newsItemList">
 		<id property="id" column="id"/>
 		<result property="title" column="title"/>
 		<result property="time"  column="time"/>
 		<result property="link"  column="link"/>
 		<result property="newsType" column="type"/>
+		<result property="hot" column="hot"/>
+		<result property="thumbnail" column="thumbnail"/>
 	</resultMap>
 </mapper>

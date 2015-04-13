@@ -8,22 +8,24 @@
 		<typeAlias alias="NewsContent" type="com.oliver.models.NewsContent"/>
 		<typeAlias alias="Paragraph" type="com.oliver.models.Paragraph"/>
 		<typeAlias alias="Picture" type="com.oliver.models.Picture"/>
+		<typeAlias alias="Stock" type="com.oliver.models.Stock"/>
+		<typeAlias alias="StockMarket" type="com.oliver.models.StockMarket"/>
+		<typeAlias alias="CompanyInfo" type="com.oliver.models.CompanyInfo"/>
+		<typeAlias alias="Participation" type="com.oliver.models.Participation"/>
+		<typeAlias alias="Manager" type="com.oliver.models.Manager"/>
+		<typeAlias alias="StockInfo" type="com.oliver.models.StockInfo"/>
+		<typeAlias alias="TestClass" type="com.oliver.models.TestClass"/>
 	</typeAliases>
-	<environments default="development">
-		<environment id="development">
-			<transactionManager type="JDBC" />
-			<dataSource type="POOLED">
-				<property name="driver" value="com.mysql.jdbc.Driver" />
-				<property name="url" value="jdbc:mysql://127.0.0.1:3306/spider" />
-				<property name="username" value="root" />
-				<property name="password" value="root" />
-			</dataSource>
-		</environment>
-	</environments>
-	<mappers>
-		<mapper resource="com/oliver/models/NewsItemMapper.xml" />
-		<mapper resource="com/oliver/models/NewsContentMapper.xml" />
-		<mapper resource="com/oliver/models/ParagraphMapper.xml" />
-	    <mapper resource="com/oliver/models/PictureMapper.xml" />
-	</mappers>
+<!-- 	<mappers> -->
+<!-- 		<mapper resource="com/oliver/models/NewsItemMapper.xml" /> -->
+<!-- 		<mapper resource="com/oliver/models/NewsContentMapper.xml" /> -->
+<!-- 		<mapper resource="com/oliver/models/ParagraphMapper.xml" /> -->
+<!-- 	    <mapper resource="com/oliver/models/PictureMapper.xml" /> -->
+<!-- 	    <mapper resource="com/oliver/models/StockMapper.xml" /> -->
+<!-- 	    <mapper resource="com/oliver/models/StockMarketMapper.xml" /> -->
+<!-- 	    <mapper resource="com/oliver/models/CompanyInfoMapper.xml" /> -->
+<!-- 	    <mapper resource="com/oliver/models/ParticipationMapper.xml"/> -->
+<!-- 	    <mapper resource="com/oliver/models/ManagerMapper.xml"/> -->
+<!-- 	    <mapper resource="com/oliver/models/StockInfoMapper.xml"/> -->
+<!-- 	</mappers> -->
 </configuration>
