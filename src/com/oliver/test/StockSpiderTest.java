@@ -1,6 +1,8 @@
 package com.oliver.test;
 
 import org.junit.Test;
+import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.oliver.spiders.StockSpider;
 
@@ -18,6 +20,8 @@ public class StockSpiderTest {
 	
 	@Test
 	public void testRefreshStock(){
+		 AbstractApplicationContext ctx = 
+				new ClassPathXmlApplicationContext("ApplicationContext.xml");
 		StockSpider spider = new StockSpider();
 		spider.executRefreshStock();
 	}

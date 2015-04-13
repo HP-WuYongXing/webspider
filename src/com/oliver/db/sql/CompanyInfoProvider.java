@@ -32,7 +32,6 @@ public class CompanyInfoProvider {
 	    VALUES("zip_code","#{zipCode}");
 	    VALUES("business_scope","#{businessScope}");
 	    VALUES("company_info","#{companyInfo}");
-	    VALUES("stock_id","#{stockId}");
 	    return SQL();
 	}
 	

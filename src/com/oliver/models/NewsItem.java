@@ -11,6 +11,7 @@ public class NewsItem
 	private int hot;
 	private String thumbnail;
 	private int stockId;
+	private int urlCode;
 	public int getId() {
 		return id;
 	}
@@ -86,14 +87,22 @@ public class NewsItem
 		this.stockId = stockId;
 	}
 
+	
+	public int getUrlCode() {
+		return urlCode;
+	}
+
+	public void setUrlCode(int urlCode) {
+		this.urlCode = urlCode;
+	}
+
 	@Override
 	public String toString() {
 		return "NewsItem [id=" + id + ", title=" + title + ", link=" + link
 				+ ", time=" + time + ", content=" + content + ", newsType="
 				+ newsType + ", hot=" + hot + ", thumbnail=" + thumbnail
-				+ ", stockId=" + stockId + "]";
+				+ ", stockId=" + stockId + ", urlCode=" + urlCode + "]";
 	}
-
 	
 	
 

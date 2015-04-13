@@ -12,9 +12,10 @@ public interface INewsItemService {
 	public List<NewsItem> getAll();
     public boolean updateNewsItem(NewsItem newsItem);
     public void deleteAll();
-    public void deleteWithUrlAndType(String url,int type);
+    public void deleteByTypeAndUrlCode(int type,int urlCode);
     public List<NewsItem> getListByType(int type);
     public List<NewsItem> getListByTypeAtLimit(int limit,int type);
     public List<NewsItem> getLIstByTypeAtOffset(int offset,int limit,int type);
     public NewsItem getById(int id);
+    public List<NewsItem> getListByTypeAndUrlCode(int type,int urlCode);
 }

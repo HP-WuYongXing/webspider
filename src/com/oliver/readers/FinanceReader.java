@@ -19,6 +19,7 @@ import com.mysql.jdbc.Constants;
 import com.oliver.constants.ConstantsForCommon;
 import com.oliver.constants.ConstantsForNewsItem;
 import com.oliver.context.AppContext;
+import com.oliver.context.BeanLocator;
 import com.oliver.dao.impl.NewsContentDao;
 import com.oliver.dao.impl.NewsItemDao;
 import com.oliver.dao.impl.ParagraphDao;
@@ -38,10 +39,10 @@ import sun.misc.BASE64Encoder;
 
 public class FinanceReader {
 	
-	private static AbstractApplicationContext context = AppContext.getContext();
+	//private static AbstractApplicationContext context = AppContext.getContext();
 	
 	private List<NewsItem> getNewsItemList(int page,int newsType){
-		NewsItemService itemService = (NewsItemService)context.getBean("newsItemService");
+		NewsItemService itemService = (NewsItemService)BeanLocator.getBean("newsItemService");
 		return itemService.getLIstByTypeAtOffset(page*ConstantsForCommon.PAGE_LENGTH,
 				ConstantsForCommon.PAGE_LENGTH,
 				newsType);
@@ -106,15 +107,15 @@ public class FinanceReader {
 	}
 
 	private NewsContent getNewsContent(int titleId) {
-		NewsContentService contentService =(NewsContentService)context.getBean("newsContentService");
+		NewsContentService contentService =(NewsContentService)BeanLocator.getBean("newsContentService");
 		NewsContent content  = contentService.getByTitileId(titleId);
 		if(content==null)return null;
 		System.out.println("titleId: "+titleId);
 		int contentId = content.getId();
-		ParagraphService parService = (ParagraphService)context.getBean("paragraphService");
+		ParagraphService parService = (ParagraphService)BeanLocator.getBean("paragraphService");
 		List<Paragraph> parList = parService.getListByContentId(contentId);
 		
-		PictureService picService =(PictureService)context.getBean("pictureService");
+		PictureService picService =(PictureService)BeanLocator.getBean("pictureService");
 		List<Picture> picList = picService.getListByContentId(contentId);
 		
 		content.setParList(parList);
@@ -141,7 +142,7 @@ public class FinanceReader {
 	}
 	
 	private List<NewsItem> getHeaderNews(int type){
-		NewsItemService itemService = (NewsItemService)context.getBean("newsItemService");
+		NewsItemService itemService = (NewsItemService)BeanLocator.getBean("newsItemService");
 		return itemService.getListByTypeAtLimit(5, type);
 	}
 //	
@@ -238,7 +239,7 @@ public class FinanceReader {
     }
 	
 	public void addHotPoint(int titleId){
-		NewsItemService service = (NewsItemService)context.getBean("newsItemService");
+		NewsItemService service = (NewsItemService)BeanLocator.getBean("newsItemService");
 		NewsItem newsItem = service.getById(titleId);
 		int hot = newsItem.getHot();
 		newsItem.setHot(++hot);

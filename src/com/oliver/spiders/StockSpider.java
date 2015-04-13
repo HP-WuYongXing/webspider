@@ -14,34 +14,38 @@ import com.oliver.service.impl.CompanyInfoService;
 import com.oliver.service.impl.StockService;
 import com.oliver.constants.ConstantsForCommon;
 import com.oliver.context.AppContext;
+import com.oliver.context.BeanLocator;
 import com.oliver.http.DataUtils;
 
 public class StockSpider {
 	
 	private String STOCK_URL="http://quote.stockstar.com/stock/stock_index.htm";
-	private static AbstractApplicationContext context = AppContext.getContext();
-	
+	//private static AbstractApplicationContext context = AppContext.getContext();
+	//private static BeanLocator beanLocator = BeanLocator.getInstance();
 	
 	public void executRefreshStock(){
-		deleteAllStock();
-		List<Stock> list = getStocks();
-		saveStocks(list);
-		StockCompanyCommonInfoSpider spider = new StockCompanyCommonInfoSpider();
-		for(int i=0;i<list.size();i++){
-			spider.refreshCompanyInfo(list.get(i));
-		}
 		
-		List<Stock> noCompanyInfoList = checkNoCompanyInfo(list);
-		if(noCompanyInfoList.size()!=0){
-			reloadCompanyInfo(noCompanyInfoList);
+		List<Stock> list = getStocks();
+		if(list!=null&&list.size()!=0){
+			deleteAllStock();
+			saveStocks(list);
 		}
+//		StockCompanyCommonInfoSpider spider = new StockCompanyCommonInfoSpider();
+//		for(int i=0;i<list.size();i++){
+//			spider.refreshCompanyInfo(list.get(i));
+//		}
+//		
+//		List<Stock> noCompanyInfoList = checkNoCompanyInfo(list);
+//		if(noCompanyInfoList.size()!=0){
+//			reloadCompanyInfo(noCompanyInfoList);
+//		}
 	}
 	
 	
 	
 private void reloadCompanyInfo(List<Stock> noCompanyInfoList) {
 		int cnt=0;
-		CompanyInfoService ciService = (CompanyInfoService)context.getBean("companyInfoService");
+		CompanyInfoService ciService = (CompanyInfoService)BeanLocator.getBean("companyInfoService");
 		List<Stock> noList = new ArrayList<Stock>();
 		while(cnt<ConstantsForCommon.RELOAD_TIME){
 			for(Stock s:noCompanyInfoList){
@@ -58,7 +62,7 @@ private void reloadCompanyInfo(List<Stock> noCompanyInfoList) {
 
 
 private List<Stock> checkNoCompanyInfo(List<Stock> list) {
-		CompanyInfoService ciService = (CompanyInfoService)context.getBean("companyInfoService");
+		CompanyInfoService ciService = (CompanyInfoService)BeanLocator.getBean("companyInfoService");
 		List<Stock> noCompanyInfoList = new ArrayList<Stock>();
 		for(Stock s:list){
 			CompanyInfo ci= ciService.getByStockId(s.getId());
@@ -72,7 +76,7 @@ private List<Stock> checkNoCompanyInfo(List<Stock> list) {
 
 
 private void deleteAllStock(){
-	  StockService service = (StockService) context.getBean("stockService");
+	  StockService service = (StockService) BeanLocator.getBean("stockService");
 	   service.deleteAll();
    }
 	
@@ -101,7 +105,7 @@ private void deleteAllStock(){
 	}
 	
 	private void saveStocks(List<Stock> stockList){
-		 StockService service = (StockService) context.getBean("stockService");
+		 StockService service = (StockService) BeanLocator.getBean("stockService");
 		for(Stock s:stockList){
 			service.addStock(s);
 		}

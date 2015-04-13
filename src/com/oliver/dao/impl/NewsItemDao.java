@@ -45,8 +45,8 @@ public class NewsItemDao implements INewsItemDao{
 	}
 
 	@Override
-	public void deleteWithUrlAndType(String url, int type) {
-		itemMapper.deleteWithUrlAndType(url, type);
+	public void deleteByTypeAndUrlCode(int type, int urlCode) {
+		itemMapper.deleteByTypeAndUrlCode(type, urlCode);
 	}
 
 	@Override
@@ -67,6 +67,11 @@ public class NewsItemDao implements INewsItemDao{
 	@Override
 	public NewsItem selectById(int id) {
 		return itemMapper.selectById(id);
+	}
+
+	@Override
+	public List<NewsItem> selectByTypeAndUrlCode(int type, int urlCode) {
+		return itemMapper.selectByTypeAndUrlCode(type,urlCode);
 	}
 	
 	

@@ -19,14 +19,15 @@ import com.oliver.http.DataUtils;
 public class Money163Spider extends NewsSpider{
 	private static final String MONEY_163_URL ="http://money.163.com/";
 	private static final String STOCKS_URL="http://money.163.com/stock/";
+	private static final int URL_CODE=ConstantsForNewsItem.URL_163;
 	
 	@Override
 	public void executedRefreshFocus(){
-		this.excutedRefreshFocus(this, MONEY_163_URL);
+		this.excutedRefreshFocus(this, URL_CODE);
 	}
 	
 	public void executedRefreshStocks(){
-		this.excutedRefreshStocksNews(this, STOCKS_URL);
+		this.excutedRefreshStocksNews(this, URL_CODE);
 	}
 
 	@Override
@@ -39,6 +40,7 @@ public class Money163Spider extends NewsSpider{
 		int focusLength = el_focus_news_list.size();
 		for(int i=0;i<focusLength;i++){
 			NewsItem item = new NewsItem();
+			item.setUrlCode(URL_CODE);
 			Element el_focus_item_a = el_focus_news_list.get(i);
 			String str = el_focus_item_a.text();
 			item.setTitle(str);
@@ -55,6 +57,7 @@ public class Money163Spider extends NewsSpider{
 			int sublen=el_three_cat_a_list.size();
 			for(int j=0;j<sublen;j++){
 				NewsItem item = new NewsItem();
+				item.setUrlCode(URL_CODE);
 				Element el_three_cat_a = el_three_cat_a_list.get(j);
 				String str = el_three_cat_a.text();
 				item.setTitle(str);
@@ -132,6 +135,7 @@ public class Money163Spider extends NewsSpider{
 		int size = el_news_a_list.size();
 		for(int i=0;i<size;i++){
 			NewsItem item = new NewsItem();
+			item.setUrlCode(URL_CODE);
 			Element el_news_a = el_news_a_list.get(i);
 			String str  = el_news_a.text();
 			System.out.println("title: "+str);

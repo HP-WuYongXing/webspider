@@ -31,9 +31,10 @@
 			<value>root</value>
 		</property>
 	</bean>
+	<bean id="beanLocator" class="com.oliver.context.BeanLocator"></bean>
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">  
 	    <property name="dataSource" ref="jdbcDataSource"/>
-		<property name="configLocation" value="mybatis-config.xml"></property>
+		<property name="configLocation" value="classpath:/mybatis-config.xml"></property>
 <!--         <property name="mapperLocations" value="com/oliver/spider/beans/*.xml"></property> -->
 	</bean>
 	<bean id="userMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
@@ -90,8 +91,37 @@
 	  <property name="mapperInterface" value="com.oliver.mapper.inter.IParticipationMapper" />
 	  <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
 	</bean>
+	<bean id="spiderManager" class="com.oliver.spiders.manager.SpiderManager" init-method="init"></bean>
+	<bean id="timerTaskBean" class="org.springframework.scheduling.timer.MethodInvokingTimerTaskFactoryBean">
+		<property name="targetObject">
+			<ref bean="spiderManager"/>
+		</property>
+		<property name="targetMethod">
+		<value>refreshFinanceNews</value>
+		</property>
+	</bean>
 	
-	
+	<bean id="scheduledTimerTask" class="org.springframework.scheduling.timer.ScheduledTimerTask">
+    <!--这里定义定时任务的对象的位置-->
+    <property name="timerTask">
+     <ref bean="timerTaskBean"/>
+    </property>
+    <!--这里定义每0.5小时程序执行一次-->
+    <property name="period">
+     <value>1800000</value>
+    </property>
+    <!--这里定义程序启动10秒钟后开始执行-->
+    <property name="delay">
+     <value>3600000</value>
+    </property>
+</bean>
+<bean id="timerFactoryBean" class="org.springframework.scheduling.timer.TimerFactoryBean">
+    <property name="scheduledTimerTasks">
+     <list>
+        <ref bean="scheduledTimerTask"/>
+     </list>
+    </property>
+</bean> 
 <!--    <bean id="testDao" class="com.oliver.spider.dao.impl.TestClassDao"> -->
 <!-- 	  <property name="userMapper" ref="userMapper" /> -->
 <!-- 	</bean> -->

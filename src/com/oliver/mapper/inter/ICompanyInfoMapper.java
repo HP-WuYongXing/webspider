@@ -34,8 +34,6 @@ public interface ICompanyInfoMapper {
 			@Result(property="contacts",column="contacts"),
 			@Result(property="zipCode",column="zip_code"),
 			@Result(property="businessScope",column="business_scope"),
-			@Result(property="companyInfo",column="company_info"),
-			@Result(property="stockId",column="stock_id")
-	})
+			@Result(property="companyInfo",column="company_info")})
 	public CompanyInfo selectByStockId(int stockId);
 }

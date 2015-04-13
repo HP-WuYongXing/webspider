@@ -21,6 +21,7 @@ import com.oliver.service.impl.PictureService;
 import com.oliver.constants.ConstantsForCommon;
 import com.oliver.constants.ConstantsForNewsItem;
 import com.oliver.context.AppContext;
+import com.oliver.context.BeanLocator;
 import com.oliver.http.DataUtils;
 
 
@@ -32,20 +33,19 @@ public abstract class NewsSpider {
 	public abstract NewsContent getFocusNewsContent(NewsItem title);
 	public abstract NewsContent getStocksNewsContent(NewsItem title);
 	public boolean refreshClear=true;
-	public static AbstractApplicationContext context = AppContext.getContext();
 	
-	public static void clearNewsItems(String url,int newsType) {
-		NewsItemService itemService = (NewsItemService)context.getBean("newsItemService");
-		itemService.deleteWithUrlAndType(url, newsType);
+	public static void clearNewsItems(int newsType,int urlCode) {
+		NewsItemService itemService = (NewsItemService)BeanLocator.getBean("newsItemService");
+		itemService.deleteByTypeAndUrlCode(newsType, urlCode);
 	}
 	
 	public static void saveNewsItemList(List<NewsItem> list){
-		NewsItemService newsItemService = (NewsItemService)context.getBean("newsItemService");
+		NewsItemService newsItemService = (NewsItemService)BeanLocator.getBean("newsItemService");
 	    newsItemService.addNewsItemList(list);
 	}
 	
 	public static  void saveParagraphs(List<Paragraph> list,int contentId){
-		ParagraphService service = (ParagraphService)context.getBean("paragraphService");
+		ParagraphService service = (ParagraphService)BeanLocator.getBean("paragraphService");
 		for (Paragraph p:list) {
 			p.setContentId(contentId);
 		}
@@ -53,17 +53,17 @@ public abstract class NewsSpider {
 	}
 	
 	public static void savePictures(List<Picture> list,int contentId){
-		PictureService service = (PictureService)context.getBean("pictureService");
+		PictureService service = (PictureService)BeanLocator.getBean("pictureService");
 		for (Picture p:list) {
 			p.setContentId(contentId);
 		}
 		service.addPictureList(list);
 	}
 	
-	public static List<NewsItem> checkHasNewsContent(int newsType){
-		NewsItemService titleService = (NewsItemService) context.getBean("newsItemService");
-		NewsContentService contentService =(NewsContentService)context.getBean("newsContentService");
-		List<NewsItem> items = titleService.getListByType(newsType);
+	public static List<NewsItem> checkHasNewsContent(int newsType,int urlCode){
+		NewsItemService titleService = (NewsItemService) BeanLocator.getBean("newsItemService");
+		NewsContentService contentService =(NewsContentService)BeanLocator.getBean("newsContentService");
+		List<NewsItem> items = titleService.getListByTypeAndUrlCode(newsType, urlCode);
 		List<NewsItem> list=new ArrayList<NewsItem>();
 		for(NewsItem item:items){
 			int titleId = item.getId();
@@ -108,9 +108,9 @@ public abstract class NewsSpider {
 		return order;
 	}
 	
-	protected void excutedRefreshFocus(NewsSpider spider,String urlPattern){
+	protected void excutedRefreshFocus(NewsSpider spider,int urlCode){
 		if(this.refreshClear){
-			clearNewsItems(urlPattern,ConstantsForNewsItem.NEWS_ITEM_KIND_FOCUS);
+			clearNewsItems(ConstantsForNewsItem.NEWS_ITEM_KIND_FOCUS,urlCode);
 		}
 		List<NewsItem> titleList = null;
 		titleList = spider.getFocusNewsList();
@@ -130,14 +130,16 @@ public abstract class NewsSpider {
 					picList);
 		}
 		System.out.println("complited...");
-		List<NewsItem> noContentItemList = checkHasNewsContent(ConstantsForNewsItem.NEWS_ITEM_KIND_FOCUS);
+		List<NewsItem> noContentItemList = checkHasNewsContent(ConstantsForNewsItem.NEWS_ITEM_KIND_FOCUS,urlCode);
 		if(noContentItemList.size()!=0){
-			reloadNewsItemContent(spider,noContentItemList,ConstantsForNewsItem.NEWS_ITEM_KIND_FOCUS);
+			reloadNewsItemContent(spider,noContentItemList);
 		}
 	}
 	
-	private static void reloadNewsItemContent(NewsSpider spider,List<NewsItem> noContentItemList,int newsType) {
+	private static void reloadNewsItemContent(NewsSpider spider,List<NewsItem> noContentItemList) {
 		int cnt=0;
+		int newsType=noContentItemList.get(0).getNewsType();
+		int urlCode=noContentItemList.get(0).getUrlCode();;
 		while(cnt<ConstantsForCommon.RELOAD_TIME){
 			for(NewsItem i:noContentItemList){
 				System.out.println(cnt+" times:reload News content with titleId:"+i.getId());
@@ -149,13 +151,13 @@ public abstract class NewsSpider {
 				saveNewsContent(i, content, parList,
 						picList);
 			}
-			noContentItemList = checkHasNewsContent(newsType);
+			noContentItemList = checkHasNewsContent(newsType,urlCode);
 			if(noContentItemList.size()==0)break;
 			cnt++;
 		}
 		
 		if(noContentItemList.size()!=0){
-			NewsItemService itemService = (NewsItemService)context.getBean("newsItemService");
+			NewsItemService itemService = (NewsItemService)BeanLocator.getBean("newsItemService");
 			for(NewsItem i:noContentItemList){
 				System.out.println("delete news item with no content :"+i.getId());
 				itemService.deleteNewsItem(i.getId());
@@ -163,9 +165,9 @@ public abstract class NewsSpider {
 		}
 	}
 	
-	protected void excutedRefreshStocksNews(NewsSpider spider,String urlPattern){
+	protected void excutedRefreshStocksNews(NewsSpider spider,int urlCode){
 		if(this.refreshClear){
-			clearNewsItems(urlPattern,ConstantsForNewsItem.NEWS_ITEM_KIND_STOCKS);
+			clearNewsItems(ConstantsForNewsItem.NEWS_ITEM_KIND_STOCKS,urlCode);
 		}
 		List<NewsItem> titleList = null;
 		titleList = spider.getStocksNewsList();
@@ -187,9 +189,9 @@ public abstract class NewsSpider {
 					picList);
 		}
 		System.out.println("complited...");
-		List<NewsItem> noContentItemList = checkHasNewsContent(ConstantsForNewsItem.NEWS_ITEM_KIND_STOCKS);
+		List<NewsItem> noContentItemList = checkHasNewsContent(ConstantsForNewsItem.NEWS_ITEM_KIND_STOCKS,urlCode);
 		if(noContentItemList.size()!=0){
-			reloadNewsItemContent(spider,noContentItemList,ConstantsForNewsItem.NEWS_ITEM_KIND_STOCKS);
+			reloadNewsItemContent(spider,noContentItemList);
 		}
 	}
 	
@@ -218,7 +220,7 @@ public abstract class NewsSpider {
 			addTimeInfoToNewsItem(item.getId(), content.getTime());
 		}
 		content.setTitleId(item.getId());
-	    NewsContentService service = (NewsContentService)context.getBean("newsContentService");
+	    NewsContentService service = (NewsContentService)BeanLocator.getBean("newsContentService");
 	    System.out.println("add content: "+content);
 		service.addNewsContent(content);
 
@@ -232,7 +234,7 @@ public abstract class NewsSpider {
 	
 	
 	public static void addTimeInfoToNewsItem(int id, String time) {
-		NewsItemService itemService = (NewsItemService)context.getBean("newsItemService");
+		NewsItemService itemService = (NewsItemService)BeanLocator.getBean("newsItemService");
 		NewsItem item= itemService.getById(id);
 		item.setTime(time);
 		itemService.updateNewsItem(item);

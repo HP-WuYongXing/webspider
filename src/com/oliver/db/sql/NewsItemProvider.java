@@ -21,6 +21,7 @@ public class NewsItemProvider {
 		VALUES("time","#{time}");
 		VALUES("link","#{link}");
 		VALUES("type","#{newsType}");
+		VALUES("url_code","#{urlCode}");
 		return SQL();
 	}
 	
@@ -28,7 +29,7 @@ public class NewsItemProvider {
 		BEGIN();
 		UPDATE(TABLE_NAME);
 		SET("title=#{title},time=#{time},link=#{link},type=#{newsType},"
-				+ "hot=#{hot},thumbnail=#{thumbnail}");
+				+ "hot=#{hot},thumbnail=#{thumbnail},url_code=#{urlCode}");
 		WHERE("id=#{id}");
 		return SQL();
 	}
@@ -70,10 +71,10 @@ public class NewsItemProvider {
 		return SQL();
 	}
 	
-	public String deleteWithUrlAndTypeSql(){
+	public String deleteByTypeAndUrlCodeSql(){
 		BEGIN();
 		DELETE_FROM(TABLE_NAME);
-		WHERE("type=#{1} and link like #{0}");
+		WHERE("type=#{0} and url_code = #{1}");
 		return SQL();
 	}
 	
@@ -89,6 +90,14 @@ public class NewsItemProvider {
 		SELECT("*");
 		FROM(TABLE_NAME);
 		WHERE("type=#{0}");
+		return SQL();
+	}
+	
+	public String selectByTypeAndUrlCode(){
+		BEGIN();
+		SELECT("*");
+		FROM(TABLE_NAME);
+		WHERE("type=#{0} and url_code=#{1}");
 		return SQL();
 	}
 }

@@ -20,16 +20,18 @@ public class FinanceSTCNSpider extends NewsSpider {
 
    private static final String FOCUS_URL = "http://news.stcn.com/secu/";
    private static final String STOCK_URL = "http://stock.stcn.com/yaowen/";
+   private static final int URL_CODE= ConstantsForNewsItem.URL_STCN;
+   
 	@Override
 	public void executedRefreshFocus() {
-		this.excutedRefreshFocus(this,FOCUS_URL);
+		this.excutedRefreshFocus(this,URL_CODE);
 	}
 	
 	
 
 	@Override
 	public void executedRefreshStocks() {
-		this.excutedRefreshStocksNews(this, STOCK_URL);
+		this.excutedRefreshStocksNews(this, URL_CODE);
 	}
 
 
@@ -43,6 +45,7 @@ public class FinanceSTCNSpider extends NewsSpider {
 	    int size = el_li_list.size();
 	    for(int i=0;i<size;i++){
 	    	NewsItem item = new NewsItem();
+	    	item.setUrlCode(URL_CODE);
 	    	Element el_li = el_li_list.get(i);
 	    	Element el_li_a = el_li.getElementsByTag("a").get(0);
 	    	String str = el_li_a.text();
@@ -125,6 +128,7 @@ public class FinanceSTCNSpider extends NewsSpider {
 	    int size = el_li_list.size();
 	    for(int i=0;i<size;i++){
 	    	NewsItem item = new NewsItem();
+	    	item.setUrlCode(URL_CODE);
 	    	Element el_li = el_li_list.get(i);
 	    	Element el_li_a = el_li.getElementsByTag("a").get(0);
 	    	String str = el_li_a.text();

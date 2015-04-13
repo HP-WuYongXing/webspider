@@ -2,6 +2,7 @@ package com.oliver.test;
 
 import org.junit.Test;
 
+import com.oliver.context.AppContext;
 import com.oliver.spiders.FinanceCESpider;
 import com.oliver.spiders.FinanceCSSpider;
 import com.oliver.spiders.FinanceHeXunSpider;
@@ -66,18 +67,16 @@ public class SpiderTest {
     	spider.executedRefreshStocks();//.executedRefreshFocus();
     }
     
+    @Test
     public void testMoney163Spider(){
+    	AppContext.getContext();
     	Money163Spider spider = new Money163Spider();
     	spider.executedRefreshStocks();
     }
     
-    @Test
     public void testSpiderManager(){
     	SpiderManager manager = new SpiderManager();
-    	manager.executeRefreshTask();
-    	while(true){
-    		
-    	}
+    	
     }
     
 }

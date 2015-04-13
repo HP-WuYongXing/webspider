@@ -20,6 +20,7 @@ import com.oliver.service.impl.NewsItemService;
 import com.oliver.constants.ConstantsForCommon;
 import com.oliver.constants.ConstantsForNewsItem;
 import com.oliver.context.AppContext;
+import com.oliver.context.BeanLocator;
 import com.oliver.http.DataUtils;
 
 public class StockReportSpider {
@@ -28,11 +29,13 @@ public class StockReportSpider {
 	private static String ROOT_URL ="http://stock1.sina.cn/";
 	private static String LINK_PATTERN_URL="http://stock1.sina.cn/dpool/stock_new/v2/report_list.php";
 	private boolean refreshClear = true;
-	private static AbstractApplicationContext context = AppContext.getContext();
+	private static final int URL_CODE=ConstantsForNewsItem.URL_SINA;
+	private static final int NEWS_TYPE=ConstantsForNewsItem.NEWS_ITEM_KIND_STOCK_REPORT;
+	//private static AbstractApplicationContext context = AppContext.getContext();
 	
 	public void excutedRefreshReport(Stock stock){
 		if(this.refreshClear){
-			NewsSpider.clearNewsItems(LINK_PATTERN_URL,ConstantsForNewsItem.NEWS_ITEM_KIND_STOCK_NOTICE);
+			NewsSpider.clearNewsItems(NEWS_TYPE,URL_CODE);
 		}
 		List<NewsItem> titleList = null;
 		titleList =this.getStockReportList(stock);
@@ -41,7 +44,7 @@ public class StockReportSpider {
 			for(NewsItem title:titleList){
 				title.setStockId(stock.getId());
 			}
-			NewsSpider.saveNewsTitle(titleList,ConstantsForNewsItem.NEWS_ITEM_KIND_STOCK_REPORT);
+			NewsSpider.saveNewsTitle(titleList,NEWS_TYPE);
 		}
 		int cnt = 1;
 		for (NewsItem item : titleList) {
@@ -57,13 +60,13 @@ public class StockReportSpider {
 					picList);
 		}
 		System.out.println("complited...");
-		List<NewsItem>noContentList = NewsSpider.checkHasNewsContent(ConstantsForNewsItem.NEWS_ITEM_KIND_STOCK_REPORT);
+		List<NewsItem>noContentList = NewsSpider.checkHasNewsContent(NEWS_TYPE,URL_CODE);
 		if(noContentList.size()!=0){
-			reloadNewsItemContent(noContentList,ConstantsForNewsItem.NEWS_ITEM_KIND_STOCK_REPORT);
+			reloadNewsItemContent(noContentList);
 		}
 	}
 	
-	private void reloadNewsItemContent(List<NewsItem> noContentItemList,int newsType) {
+	private void reloadNewsItemContent(List<NewsItem> noContentItemList) {
 		int cnt=0;
 		while(cnt<ConstantsForCommon.RELOAD_TIME){
 			for(NewsItem i:noContentItemList){
@@ -76,14 +79,14 @@ public class StockReportSpider {
 				NewsSpider.saveNewsContent(i, content, parList,
 						picList);
 			}
-			noContentItemList = NewsSpider.checkHasNewsContent(newsType);
+			noContentItemList = NewsSpider.checkHasNewsContent(NEWS_TYPE,URL_CODE);
 			
 			if(noContentItemList.size()==0)break;
 			cnt++;
 		}
 		
 		if(noContentItemList.size()!=0){
-			NewsItemService itemService = (NewsItemService)context.getBean("newsItemService");
+			NewsItemService itemService = (NewsItemService)BeanLocator.getBean("newsItemService");
 			for(NewsItem i:noContentItemList){
 				System.out.println("delete news item with no content :"+i.getId());
 				itemService.deleteNewsItem(i.getId());
@@ -106,6 +109,7 @@ public class StockReportSpider {
 				continue;
 			}
 			NewsItem item =  new NewsItem();
+			item.setUrlCode(URL_CODE);
 			System.out.println("link: "+linkStr);
 			item.setLink(ROOT_URL+linkStr.substring(1));
 			String titleStr = el_a.text();

@@ -10,12 +10,13 @@ import com.oliver.models.StockMarket;
 import com.oliver.service.impl.StockMarketService;
 import com.oliver.constants.ConstantsForCommon;
 import com.oliver.context.AppContext;
+import com.oliver.context.BeanLocator;
 import com.oliver.http.DataUtils;
 
 public class StockMarketSpider {
 	
 	private static String STOCK_URL = "http://stocks.sina.cn/sh/";
-	private static AbstractApplicationContext context = AppContext.getContext();
+//	private static AbstractApplicationContext context = AppContext.getContext();
 	
 	public void refreshStockMarket(Stock stock){
 		StockMarket sm = getStockMarket(stock);
@@ -40,7 +41,7 @@ public class StockMarketSpider {
 
 	private void saveStockMarket(StockMarket sm){
 		if (sm != null) {
-			StockMarketService service = (StockMarketService) context
+			StockMarketService service = (StockMarketService) BeanLocator
 					.getBean("StockMarketService");
 			service.addStockMarket(sm);
 		}
