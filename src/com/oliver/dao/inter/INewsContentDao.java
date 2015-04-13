@@ -5,9 +5,6 @@ import java.util.List;
 import com.oliver.models.NewsContent;
 
 public interface INewsContentDao {
-	public void addNewsContent(NewsContent newsContent);
-	public boolean DeleteNewsContent(int id);
-	public List<NewsContent> query();
-    public boolean updateNewsContent(NewsContent newsContent);
-    public List<NewsContent> queryByTitileId(int titleId);
+	public void insertNewsContent(NewsContent newsContent);
+    public NewsContent selectByTitileId(int titleId);
 }

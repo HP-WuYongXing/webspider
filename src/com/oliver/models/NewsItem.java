@@ -8,7 +8,9 @@ public class NewsItem
 	private String time;
 	private String content;
 	private int newsType;
-
+	private int hot;
+	private String thumbnail;
+	private int stockId;
 	public int getId() {
 		return id;
 	}
@@ -57,11 +59,39 @@ public class NewsItem
 		this.newsType = newsType;
 	}
 
+	
+	public int getHot() {
+		return hot;
+	}
+
+	public void setHot(int hot) {
+		this.hot = hot;
+	}
+	
+	
+
+	public String getThumbnail() {
+		return thumbnail;
+	}
+
+	public void setThumbnail(String thumbnail) {
+		this.thumbnail = thumbnail;
+	}
+
+	public int getStockId() {
+		return stockId;
+	}
+
+	public void setStockId(int stockId) {
+		this.stockId = stockId;
+	}
+
 	@Override
 	public String toString() {
 		return "NewsItem [id=" + id + ", title=" + title + ", link=" + link
 				+ ", time=" + time + ", content=" + content + ", newsType="
-				+ newsType + "]";
+				+ newsType + ", hot=" + hot + ", thumbnail=" + thumbnail
+				+ ", stockId=" + stockId + "]";
 	}
 
 	
