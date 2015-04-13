@@ -16,6 +16,7 @@ public class StockProvider {
 		INSERT_INTO(TABLE_NAME);
 		VALUES("code","#{code}");
 		VALUES("name","#{name}");
+		VALUES("prefix","#{prefix}");
 		return SQL();
 	}
 	

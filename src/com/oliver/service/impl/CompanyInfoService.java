@@ -20,9 +20,8 @@ public class CompanyInfoService implements ICompanyInfoService {
 	}
 
 	@Override
-	public CompanyInfo getByStockId(int stockId) {
-		return ciDao.selectByStockId(stockId);
+	public CompanyInfo getByStockCode(String stockCode) {
+		return ciDao.selectByStockCode(stockCode);
 	}
-
 	
 }

@@ -4,5 +4,5 @@ import com.oliver.models.CompanyInfo;
 
 public interface ICompanyInfoDao {
 	public void insertCompanyInfo(CompanyInfo info);
-	public CompanyInfo selectByStockId(int stockId);
+	public CompanyInfo selectByStockCode(String stockCode);
 }

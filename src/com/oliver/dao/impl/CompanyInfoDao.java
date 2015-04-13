@@ -23,9 +23,11 @@ public class CompanyInfoDao implements ICompanyInfoDao{
 	}
 
 	@Override
-	public CompanyInfo selectByStockId(int stockId) {
-		return mapper.selectByStockId(stockId);
+	public CompanyInfo selectByStockCode(String stockCode) {
+		return mapper.selectByStockCode(stockCode);
 	}
+
+	
 
 	
 

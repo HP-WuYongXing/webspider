@@ -18,6 +18,7 @@ public class StockService implements IStockService {
 	
 	@Override
 	public void addStock(Stock stock) {
+		addPrefix(stock);
 		stockDao.insertStock(stock);
 	}
 
@@ -29,5 +30,23 @@ public class StockService implements IStockService {
 	@Override
 	public void deleteAll() {
 		stockDao.deleteAll();
+	}
+	
+	private void addPrefix(Stock stock){
+		String code= stock.getCode();
+		if(code.startsWith("600")||
+		   code.startsWith("700")||
+		   code.startsWith("710")||
+		   code.startsWith("701")||
+		   code.startsWith("711")||
+		   code.startsWith("720")||
+		   code.startsWith("730")||
+		   code.startsWith("735")||
+		   code.startsWith("737")||
+		   code.startsWith("900")){
+		   stock.setPrefix("sh");
+		}else{
+			stock.setPrefix("sz");
+		}
 	}
 }

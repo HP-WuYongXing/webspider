@@ -35,11 +35,11 @@ public class CompanyInfoProvider {
 	    return SQL();
 	}
 	
-	public String selectByStockIdSql(){
+	public String selectByStockCodeSql(){
 		BEGIN();
 		SELECT("*");
 		FROM(TABLE_NAME);
-		WHERE("stock_id=#{0}");
+		WHERE("stock_code=#{0}");
 		return SQL();
 	}
 }

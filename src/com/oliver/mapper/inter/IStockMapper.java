@@ -22,7 +22,8 @@ public interface IStockMapper {
 	@Results(value={
 			@Result(id=true,property="id",column="id"),
 			@Result(property="code",column="code"),
-			@Result(property="name",column="name")
+			@Result(property="name",column="name"),
+			@Result(property="prefix",column="prefix")
 	})
 	public List<Stock> selectAll();
 	

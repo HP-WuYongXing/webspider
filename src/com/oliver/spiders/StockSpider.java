@@ -49,7 +49,7 @@ private void reloadCompanyInfo(List<Stock> noCompanyInfoList) {
 		List<Stock> noList = new ArrayList<Stock>();
 		while(cnt<ConstantsForCommon.RELOAD_TIME){
 			for(Stock s:noCompanyInfoList){
-				CompanyInfo ci = ciService.getByStockId(s.getId());
+				CompanyInfo ci = ciService.getByStockCode(s.getCode());
 				if(ci==null){
 					noList.add(s);
 				}
@@ -65,7 +65,7 @@ private List<Stock> checkNoCompanyInfo(List<Stock> list) {
 		CompanyInfoService ciService = (CompanyInfoService)BeanLocator.getBean("companyInfoService");
 		List<Stock> noCompanyInfoList = new ArrayList<Stock>();
 		for(Stock s:list){
-			CompanyInfo ci= ciService.getByStockId(s.getId());
+			CompanyInfo ci= ciService.getByStockCode(s.getCode());
 			if(ci==null){
 				noCompanyInfoList.add(s);
 			}
