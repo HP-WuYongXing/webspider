@@ -30,6 +30,15 @@ public class StockProvider {
 	public String deleteAllSql(){
 		BEGIN();
 		DELETE_FROM(TABLE_NAME);
+		WHERE("type=1");
+		return SQL();
+	}
+	
+	public String selectListByTypeSql(){
+		BEGIN();
+		SELECT("*");
+		FROM(TABLE_NAME);
+		WHERE("type=#{0}");
 		return SQL();
 	}
 }

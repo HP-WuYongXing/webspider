@@ -2,6 +2,7 @@ package com.oliver.spiders.task;
 
 import java.util.List;
 
+import com.oliver.constants.ConstantsForStock;
 import com.oliver.context.BeanLocator;
 import com.oliver.models.Stock;
 import com.oliver.service.impl.StockService;
@@ -17,7 +18,7 @@ public class StockInfoTask implements Runnable {
 	@Override
 	public void run() {
 		StockService service = (StockService)BeanLocator.getBean("stockService");
-		List<Stock> stockList = service.getAll();
+		List<Stock> stockList = service.getListByType(ConstantsForStock.STOCK_TYPE_NORMAL);
 		for(Stock s:stockList){
 			spider.refreshCompanyInfo(s);
 		}

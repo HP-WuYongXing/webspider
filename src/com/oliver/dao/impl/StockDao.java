@@ -34,4 +34,10 @@ public class StockDao implements IStockDao {
 		stockMapper.deleteAll();
 	}
 
+	@Override
+	public List<Stock> selectListByType(int type) {
+		return stockMapper.selectListByType(type);
+	}
+
+	
 }

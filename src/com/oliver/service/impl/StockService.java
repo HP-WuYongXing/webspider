@@ -6,6 +6,8 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.oliver.constants.ConstantsForNewsItem;
+import com.oliver.constants.ConstantsForStock;
 import com.oliver.dao.impl.StockDao;
 import com.oliver.models.Stock;
 import com.oliver.service.IStockService;
@@ -19,6 +21,7 @@ public class StockService implements IStockService {
 	@Override
 	public void addStock(Stock stock) {
 		addPrefix(stock);
+	    stock.setType(ConstantsForStock.STOCK_TYPE_NORMAL);
 		stockDao.insertStock(stock);
 	}
 
@@ -49,4 +52,11 @@ public class StockService implements IStockService {
 			stock.setPrefix("sz");
 		}
 	}
+
+	@Override
+	public List<Stock> getListByType(int type) {
+		return stockDao.selectListByType(type);
+	}
+	
+	
 }

@@ -61,7 +61,7 @@ private void reloadCompanyInfo(List<Stock> noCompanyInfoList) {
    }
 
 
-private List<Stock> checkNoCompanyInfo(List<Stock> list) {
+  private List<Stock> checkNoCompanyInfo(List<Stock> list) {
 		CompanyInfoService ciService = (CompanyInfoService)BeanLocator.getBean("companyInfoService");
 		List<Stock> noCompanyInfoList = new ArrayList<Stock>();
 		for(Stock s:list){
@@ -75,7 +75,7 @@ private List<Stock> checkNoCompanyInfo(List<Stock> list) {
 
 
 
-private void deleteAllStock(){
+  private void deleteAllStock(){
 	  StockService service = (StockService) BeanLocator.getBean("stockService");
 	   service.deleteAll();
    }
