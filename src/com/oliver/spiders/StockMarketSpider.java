@@ -50,7 +50,7 @@ public class StockMarketSpider {
 	public StockMarket getStockMarket(Stock stock){
 		StockMarket sm = new StockMarket();
 		sm.setStockId(stock.getId());
-		String urlStr = STOCK_URL+"?code=sh"+stock.getCode();
+		String urlStr = STOCK_URL+"?code="+stock.getPrefix()+stock.getCode();
 		System.out.println("urlStr: "+urlStr);
 		Document doc = DataUtils.doGet(urlStr);
 		if(doc==null)return null;
@@ -180,16 +180,16 @@ public class StockMarketSpider {
 			   }
 			   break;
 		   case 10:
-			   sm.setCjl(getChengJiaoLiang(str.trim()));
+			   sm.setCjl(getDoubleFromString(str.trim()));
 			   break;
 		   case 11:
-			   sm.setCje(getMoneyFloat(str.trim()));
+			   sm.setCje(getDoubleFromString(str.trim()));
 			   break;
 		   case 12:
-			   sm.setZsz(getMoneyFloat(str.trim()));
+			   sm.setZsz(getDoubleFromString(str.trim()));
 			   break;
 		   case 13:
-			   sm.setLtsz(getMoneyFloat(str.trim()));
+			   sm.setLtsz(getDoubleFromString(str.trim()));
 			   break;
 		   }
 		}
@@ -202,23 +202,7 @@ public class StockMarketSpider {
 		return s;
 	}
 	
-	private int getChengJiaoLiang(String str){
-		StringBuilder sb = new StringBuilder();
-		for(int i=0;i<str.length();i++){
-			char c= str.charAt(i);
-			if(c=='.'||(c<='9'&&c>='0')){
-				sb.append(c);
-			}
-		}
-		
-	    float f = Float.valueOf(sb.toString());
-        if(str.indexOf("Íò")!=-1){
-	    	f=f*10000;
-	    }
-        return (int)f;
-	}
-	
-	private float getMoneyFloat(String str){
+	private double getDoubleFromString(String str){
 		StringBuilder sb = new StringBuilder();
 		for(int i=0;i<str.length();i++){
 			char c = str.charAt(i);
@@ -226,13 +210,63 @@ public class StockMarketSpider {
 				sb.append(c);
 			}
 		}
-		float f = Float.valueOf(sb.toString());
+		double d = Double.valueOf(sb.toString());
         if(str.indexOf("Íò")!=-1){
-	    	f=f*10000;
+	    	d=d*10000;
 	    }else if(str.indexOf("ÒÚ")!=-1){
-	    	f=f*100000000;
+	    	d=d*100000000;
 	    }
-        return f;
+        return d;
+	}
+	
+	public StockMarket getCompositeMarket(Stock stock){
+		StockMarket market = new StockMarket();
+		String url = STOCK_URL+"?code="+stock.getPrefix()+stock.getCode();
+		System.out.println(url);
+		Document doc = DataUtils.doGet(url);
+		if(doc==null){
+			return null;
+		}
+		Elements el_stock_content_list = doc.getElementsByClass("stock_content");
+		int size = el_stock_content_list.size();
+		for(int i=0;i<size;i++){
+			Element el_stock_content = el_stock_content_list.get(i);
+			Element el_value = el_stock_content.getElementsByClass("stock_info_value").get(0);
+			System.out.println(el_value);
+			switch(i){
+			case 0:{
+				String text = el_value.text().trim();
+				market.setJkp(Float.valueOf(text));
+				break;
+			}
+			case 1:{
+				String text = el_value.text().trim();
+				market.setZsp(Float.valueOf(text));
+				break;
+			}
+			case 2:{
+				String text = el_value.text().trim();
+				market.setZgj(Float.valueOf(text));
+				break;
+			}
+			case 3:{
+				String text = el_value.text().trim();
+				market.setZdj(Float.valueOf(text));
+				break;
+			}
+			case 4:{
+				String text = el_value.text().trim();
+				market.setCjl(getDoubleFromString(text));
+				break;
+			}
+			case 5:{
+				String text = el_value.text().trim();
+				market.setCjl(getDoubleFromString(text));
+				break;
+			}
+		  }
+		}
+		return market;
 	}
 	
 }

@@ -7,15 +7,15 @@ public class StockMarket {
 	private float ztj;//涨停价
 	private float hsl;//换手率
 	private float syl;//市盈率
-	private int cjl;//成交量
-	private float zsz;//总市值
+	private double cjl;//成交量
+	private double zsz;//总市值
 	private float zsp;//昨收盘
 	private float zdj;//最低价
 	private float dtj;//跌停价
 	private float zf;//振幅
 	private float sjl;//市净率
-	private float cje;//成交额
-	private float ltsz;//流通市值
+	private double cje;//成交额
+	private double ltsz;//流通市值
 	private float mc1;//卖出1
 	private float mc2;//...
 	private float mc3;
@@ -74,17 +74,16 @@ public class StockMarket {
 	public void setSyl(float syl) {
 		this.syl = syl;
 	}
-	public int getCjl() {
+	public double getCjl() {
 		return cjl;
 	}
-	public void setCjl(int cjl) {
+	public void setCjl(double cjl) {
 		this.cjl = cjl;
 	}
-	
-	public float getZsz() {
+	public double getZsz() {
 		return zsz;
 	}
-	public void setZsz(float zsz) {
+	public void setZsz(double zsz) {
 		this.zsz = zsz;
 	}
 	public float getZsp() {
@@ -117,16 +116,16 @@ public class StockMarket {
 	public void setSjl(float sjl) {
 		this.sjl = sjl;
 	}
-	public float getCje() {
+	public double getCje() {
 		return cje;
 	}
-	public void setCje(float cje) {
+	public void setCje(double cje) {
 		this.cje = cje;
 	}
-	public float getLtsz() {
+	public double getLtsz() {
 		return ltsz;
 	}
-	public void setLtsz(float ltsz) {
+	public void setLtsz(double ltsz) {
 		this.ltsz = ltsz;
 	}
 	public float getMc1() {
@@ -249,7 +248,6 @@ public class StockMarket {
 	public void setMr5Num(int mr5Num) {
 		this.mr5Num = mr5Num;
 	}
-	
 	public int getStockId() {
 		return stockId;
 	}
@@ -272,6 +270,7 @@ public class StockMarket {
 				+ ", mr3Num=" + mr3Num + ", mr4Num=" + mr4Num + ", mr5Num="
 				+ mr5Num + ", stockId=" + stockId + "]";
 	}
+	
 	
 	
 }

@@ -3,6 +3,8 @@ package com.oliver.test;
 import org.junit.Test;
 
 import com.oliver.context.AppContext;
+import com.oliver.models.Stock;
+import com.oliver.models.StockMarket;
 import com.oliver.spiders.FinanceCESpider;
 import com.oliver.spiders.FinanceCSSpider;
 import com.oliver.spiders.FinanceHeXunSpider;
@@ -12,6 +14,7 @@ import com.oliver.spiders.FinanceSTCNSpider;
 import com.oliver.spiders.FinanceSinaHeaderSpider;
 import com.oliver.spiders.FinanceSinaSpider;
 import com.oliver.spiders.Money163Spider;
+import com.oliver.spiders.StockMarketSpider;
 import com.oliver.spiders.manager.SpiderManager;
 
 public class SpiderTest {
@@ -67,7 +70,6 @@ public class SpiderTest {
     	spider.executedRefreshStocks();//.executedRefreshFocus();
     }
     
-    @Test
     public void testMoney163Spider(){
     	AppContext.getContext();
     	Money163Spider spider = new Money163Spider();
@@ -77,6 +79,17 @@ public class SpiderTest {
     public void testSpiderManager(){
     	SpiderManager manager = new SpiderManager();
     	
+    }
+    
+    @Test
+    public void testStockMarket(){
+    	AppContext.getContext();
+    	Stock stock = new Stock();
+    	stock.setCode("000001");
+    	stock.setPrefix("sh");
+    	StockMarketSpider spider = new StockMarketSpider();
+    	StockMarket market = spider.getCompositeMarket(stock);
+    	System.out.println(market);
     }
     
 }

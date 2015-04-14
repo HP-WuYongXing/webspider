@@ -24,7 +24,8 @@ public interface IStockMapper {
 			@Result(property="code",column="code"),
 			@Result(property="name",column="name"),
 			@Result(property="prefix",column="prefix"),
-			@Result(property="type",column="type")
+			@Result(property="type",column="type"),
+			@Result(property="prefix",column="prefix")
 	})
 	public List<Stock> selectAll();
 	
@@ -37,7 +38,8 @@ public interface IStockMapper {
 			@Result(property="code",column="code"),
 			@Result(property="name",column="name"),
 			@Result(property="prefix",column="prefix"),
-			@Result(property="type",column="type")
+			@Result(property="type",column="type"),
+			@Result(property="prefix",column="prefix")
 	})
 	public List<Stock> selectListByType(int type);
 }
