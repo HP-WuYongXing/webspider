@@ -29,7 +29,8 @@ public interface INewsItemMapper {
 	           @Result(property = "newsType", column = "type"),
 	           @Result(property = "hot", column = "hot"),
 	           @Result(property = "thumbnail", column ="thumbnail"),
-	           @Result(property = "stockId",column="stock_id")})
+	           @Result(property = "stockId",column="stock_id"),
+	           @Result(property = "urlCode",column="url_code")})
 	public NewsItem selectById(int id);
 	
 	@DeleteProvider(type=NewsItemProvider.class,method="deleteAllNewsItemsSql")
@@ -44,7 +45,8 @@ public interface INewsItemMapper {
 	           @Result(property = "newsType", column = "type"),
 	           @Result(property = "hot", column = "hot"),
 	           @Result(property = "thumbnail", column ="thumbnail"),
-	           @Result(property = "stockId",column="stock_id")})
+	           @Result(property = "stockId",column="stock_id"),
+	           @Result(property = "urlCode",column="url_code")})
 	public List<NewsItem> selectAll();
 	
 	@SelectProvider(type=NewsItemProvider.class,method="selectListByTypeAtOffsetSql")
@@ -56,14 +58,15 @@ public interface INewsItemMapper {
 	           @Result(property = "newsType", column = "type"),
 	           @Result(property = "hot", column = "hot"),
 	           @Result(property = "thumbnail", column ="thumbnail"),
-	           @Result(property = "stockId",column="stock_id")})
+	           @Result(property = "stockId",column="stock_id"),
+	           @Result(property = "urlCode",column="url_code")})
 	public List<NewsItem> selectListByTypeAtOffset(int offset,int limit,int type);
 	
 	@DeleteProvider(type=NewsItemProvider.class,method="deleteByIdSql")
 	public void deleteById(int id);
 	
-	@DeleteProvider(type=NewsItemProvider.class,method="deleteWithUrlAndTypeSql")
-	public void deleteWithUrlAndType(String url,int type);
+	@DeleteProvider(type=NewsItemProvider.class,method="deleteByTypeAndUrlCodeSql")
+	public void deleteByTypeAndUrlCode(int type,int urlCode);
 
 	@UpdateProvider(type=NewsItemProvider.class,method="updateNewsItemSql")
 	public void updateNewsItem(NewsItem item);
@@ -77,7 +80,8 @@ public interface INewsItemMapper {
 	           @Result(property = "newsType", column = "type"),
 	           @Result(property = "hot", column = "hot"),
 	           @Result(property = "thumbnail", column ="thumbnail"),
-	           @Result(property = "stockId",column="stock_id")})
+	           @Result(property = "stockId",column="stock_id"),
+	           @Result(property = "urlCode",column="url_code")})
 	public List<NewsItem> selectListByTypeAtLimit(int limit,int type);
 	
 	@SelectProvider(type=NewsItemProvider.class,method="selectListByTypeSql")
@@ -89,7 +93,21 @@ public interface INewsItemMapper {
 	           @Result(property = "newsType", column = "type"),
 	           @Result(property = "hot", column = "hot"),
 	           @Result(property = "thumbnail", column ="thumbnail"),
-	           @Result(property = "stockId",column="stock_id")})
+	           @Result(property = "stockId",column="stock_id"),
+	           @Result(property = "urlCode",column="url_code")})
 	public List<NewsItem> selectListByType(int type);
+	
+	@SelectProvider(type=NewsItemProvider.class,method="selectByTypeAndUrlCode")
+	@Results(value= {
+	           @Result(id = true, property = "id", column = "id"),  
+	           @Result(property = "title", column ="title"),
+	           @Result(property = "time" , column ="time"),
+	           @Result(property = "link", column = "link"),
+	           @Result(property = "newsType", column = "type"),
+	           @Result(property = "hot", column = "hot"),
+	           @Result(property = "thumbnail", column ="thumbnail"),
+	           @Result(property = "stockId",column="stock_id"),
+	           @Result(property = "urlCode",column="url_code")})
+	public List<NewsItem> selectByTypeAndUrlCode(int type,int urlCode);
 	
 }

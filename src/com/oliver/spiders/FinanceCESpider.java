@@ -21,17 +21,18 @@ public class FinanceCESpider extends NewsSpider{
 	private static final String STOCKS_URL="http://finance.ce.cn/stock/gsgdbd/index.shtml";
 	private static final String FOCUS_URL_PATTERN ="http://finance.ce.cn//rolling/";
 	private static final String STOCK_URL_PATTERN ="http://finance.ce.cn//rolling/";
+	private static final int URL_CODE= ConstantsForNewsItem.URL_CE;
 	public FinanceCESpider() {
 		
 	}
 
 	public void executedRefreshFocus(){
-		this.excutedRefreshFocus(this, FOCUS_URL_PATTERN);
+		this.excutedRefreshFocus(this,URL_CODE);
 	}
 	
 	@Override
 	public void executedRefreshStocks(){
-		this.excutedRefreshStocksNews(this,STOCK_URL_PATTERN);
+		this.excutedRefreshStocksNews(this,URL_CODE);
 	}
 	
 	@Override
@@ -49,6 +50,7 @@ public class FinanceCESpider extends NewsSpider{
 		List<NewsItem> list = new ArrayList<NewsItem>();
 		for(int i=0;i<el_list_table_td.size();i++){
 			NewsItem item = new NewsItem();
+			item.setUrlCode(URL_CODE);
 			Elements el_td_a_list = el_list_table_td.get(i).getElementsByTag("a");
 			if(el_td_a_list.size()==0)continue;
 			Element el_td_a = el_td_a_list.get(0);

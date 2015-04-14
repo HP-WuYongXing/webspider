@@ -26,13 +26,14 @@ import com.oliver.service.impl.NewsContentService;
 import com.oliver.service.impl.ParagraphService;
 import com.oliver.service.impl.PictureService;
 import com.oliver.context.AppContext;
+import com.oliver.context.BeanLocator;
 import com.oliver.dao.impl.NewsContentDao;
 import com.oliver.dao.impl.NewsItemDao;
 import com.oliver.dao.impl.ParagraphDao;
 import com.oliver.dao.impl.PictureDao;
 
 public class FinaceCESReader {
-	private static AbstractApplicationContext context= AppContext.getContext();
+	//private static AbstractApplicationContext context= AppContext.getContext();
 	
 	public void excutedReadTask(){
 		FinanceCESpider spider = new FinanceCESpider();
@@ -116,14 +117,14 @@ public class FinaceCESReader {
 	}
 
 	private NewsContent getNewsContent(int titleId) {
-		NewsContentService contentService = (NewsContentService)context.getBean("newsContentService");
+		NewsContentService contentService = (NewsContentService)BeanLocator.getBean("newsContentService");
 		NewsContent content  = contentService.getByTitileId(titleId);
 		if(content==null)return null;
 		int contentId = content.getId();
-		ParagraphService parService = (ParagraphService)context.getBean("paragraphService");
+		ParagraphService parService = (ParagraphService)BeanLocator.getBean("paragraphService");
 		List<Paragraph> parList = parService.getListByContentId(contentId);
 		
-		PictureService picService =(PictureService)context.getBean("pictureService");
+		PictureService picService =(PictureService)BeanLocator.getBean("pictureService");
 		List<Picture> picList = picService.getListByContentId(contentId);
 		
 		content.setParList(parList);

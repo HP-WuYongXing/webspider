@@ -5,5 +5,5 @@ import com.oliver.models.CompanyInfo;
 public interface ICompanyInfoService {
 	
 	public void addCompanyInfo(CompanyInfo info);
-	public CompanyInfo getByStockId(int stockId);
+	public CompanyInfo getByStockCode(String stockCode);
 }

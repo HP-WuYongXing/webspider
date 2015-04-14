@@ -22,10 +22,24 @@ public interface IStockMapper {
 	@Results(value={
 			@Result(id=true,property="id",column="id"),
 			@Result(property="code",column="code"),
-			@Result(property="name",column="name")
+			@Result(property="name",column="name"),
+			@Result(property="prefix",column="prefix"),
+			@Result(property="type",column="type"),
+			@Result(property="prefix",column="prefix")
 	})
 	public List<Stock> selectAll();
 	
 	@DeleteProvider(type=StockProvider.class,method="deleteAllSql")
 	public void deleteAll();
+	
+	@SelectProvider(type=StockProvider.class,method="selectListByTypeSql")
+	@Results(value={
+			@Result(id=true,property="id",column="id"),
+			@Result(property="code",column="code"),
+			@Result(property="name",column="name"),
+			@Result(property="prefix",column="prefix"),
+			@Result(property="type",column="type"),
+			@Result(property="prefix",column="prefix")
+	})
+	public List<Stock> selectListByType(int type);
 }

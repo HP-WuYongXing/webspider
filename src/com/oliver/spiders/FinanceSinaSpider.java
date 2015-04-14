@@ -25,13 +25,14 @@ public class FinanceSinaSpider extends NewsSpider{
 	private static final String SINA_FOCUS_URL="http://finance.sina.com.cn/money/";
 	private static final String STOCK_URL="http://top.finance.sina.com.cn/ws/GetTopDataList.php?top_not_url=/ustock/&top_type=day&top_cat=stock&top_time=20150405&top_show_num=20&top_order=ASC&js_var=stock_1_data";
 	private static final String ROOT_URL ="http://finance.sina.com.cn/stock/";
+	private static final int URL_CODE= ConstantsForNewsItem.URL_SINA;
 	@Override
 	public void executedRefreshFocus() {
-		this.excutedRefreshFocus(this, SINA_FOCUS_URL);
+		this.excutedRefreshFocus(this, URL_CODE);
 	}
 	
 	public void executedRefreshStocks(){
-		this.excutedRefreshStocksNews(this, ROOT_URL);
+		this.excutedRefreshStocksNews(this, URL_CODE);
 	}
 
 	@Override
@@ -43,6 +44,7 @@ public class FinanceSinaSpider extends NewsSpider{
 		System.out.println("news item list size: "+len);
 		for(int i=0;i<len;i++){
 			NewsItem  item = new NewsItem();
+			item.setUrlCode(URL_CODE);
 			Element el_news_item = el_news_item_list.get(i);
 			Elements el_h2_list = el_news_item.getElementsByTag("h2");
 			if(el_h2_list.size()==0)continue;
@@ -141,6 +143,7 @@ public class FinanceSinaSpider extends NewsSpider{
 			int len = jsonArr.length();
 			for(int i=0;i<len;i++){
 				NewsItem item = new NewsItem();
+			    item.setUrlCode(URL_CODE);
 				JSONObject subObject = jsonArr.getJSONObject(i);
 				String str = subObject.getString("title");
 			//	System.out.println("title: "+str);

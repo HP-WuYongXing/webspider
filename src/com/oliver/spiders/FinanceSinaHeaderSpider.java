@@ -18,9 +18,10 @@ import com.oliver.http.DataUtils;
 public class FinanceSinaHeaderSpider extends NewsSpider{
 
 	private static final String FOCUS_URL="http://finance.sina.com.cn/money/";
+	private static final int URL_CODE= ConstantsForNewsItem.URL_SINA;
 	@Override
 	public void executedRefreshFocus() {
-		this.excutedRefreshFocus(this,FOCUS_URL);
+		this.excutedRefreshFocus(this,URL_CODE);
 	}
 	
 	
@@ -43,6 +44,7 @@ public class FinanceSinaHeaderSpider extends NewsSpider{
 			System.out.println("news item list size: " + len);
 			for (int i = 0; i < len; i++) {
 				NewsItem item = new NewsItem();
+				item.setUrlCode(URL_CODE);
 				Element el_news_item = el_news_item_list.get(i);
 				Element el_news_item_img = el_news_item.getElementsByTag("img")
 						.get(0);

@@ -23,14 +23,15 @@ public class FinanceQQSpider extends NewsSpider {
 	
 	public static final String FOCUS_URL= "http://finance.qq.com/";
 	public static final String STOCKS_URL ="http://finance.qq.com/l/stock/gdzx/list2012121283658.htm";
+	private static final int URL_CODE=ConstantsForNewsItem.URL_QQ;
 	
 	@Override
 	public void executedRefreshFocus() {
-		this.excutedRefreshFocus(this, FOCUS_URL);
+		this.excutedRefreshFocus(this, URL_CODE);
 	}
 	
 	public void executedRefreshStocks(){
-		this.excutedRefreshStocksNews(this, STOCKS_URL);
+		this.excutedRefreshStocksNews(this, URL_CODE);
 	}
 
 	@Override
@@ -58,6 +59,7 @@ public class FinanceQQSpider extends NewsSpider {
 			int len = el_li_list.size();
 			for(int i=0;i<len;i++){
 				NewsItem newsItem = new NewsItem();
+				newsItem.setUrlCode(URL_CODE);
 				Element el_li =el_li_list.get(i);
 				System.out.println("li: "+el_li);
 				Elements el_span_time_list = el_li.getElementsByClass("t-time");
@@ -148,6 +150,7 @@ public class FinanceQQSpider extends NewsSpider {
 		int size = el_list.size();
 		for(int i=0;i<size;i++){
 			NewsItem item = new NewsItem();
+			item.setUrlCode(URL_CODE);
 			Element el_li = el_list.get(i);
 			Element el_li_a = el_li.getElementsByTag("a").get(0);
 			String str = el_li_a.text();

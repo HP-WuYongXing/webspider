@@ -9,4 +9,5 @@ public interface IStockService {
 	public void addStock(Stock stock);
 	public List<Stock> getAll();
 	public void deleteAll();
+	public List<Stock> getListByType(int type);
 }

@@ -20,10 +20,10 @@ public class FinanceCSSpider extends NewsSpider {
 	private static final String FOCUS_URL="http://www.chinastock.com.cn/yhwz/information/yaowen.shtml";
 	
 	private static final String URL_ROOT="http://www.chinastock.com.cn";
-	
+	private static final int URL_CODE=ConstantsForNewsItem.URL_CS;
 	@Override
 	public void executedRefreshFocus() {
-		this.excutedRefreshFocus(this,URL_ROOT);
+		this.excutedRefreshFocus(this,URL_CODE);
 	}
 
 	
@@ -44,6 +44,7 @@ public class FinanceCSSpider extends NewsSpider {
 		int len = el_news_list.size();
 		for(int i=0;i<len;i++){
 			NewsItem item = new NewsItem();
+			item.setUrlCode(URL_CODE);
 			Element el_news_li = el_news_list.get(i);
 			Element el_news_li_a = el_news_li.getElementsByTag("a").get(0);
 			String str = el_news_li_a.text();

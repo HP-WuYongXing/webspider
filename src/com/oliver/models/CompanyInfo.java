@@ -24,7 +24,6 @@ public class CompanyInfo {
 	private String zipCode;
 	private String businessScope;
 	private String companyInfo;
-	private int stockId;
 	private StockInfo stockInfo;
 	private List<Manager> managerList;
 	private List<Participation> participationList;
@@ -149,13 +148,6 @@ public class CompanyInfo {
 	public void setCompanyInfo(String companyInfo) {
 		this.companyInfo = companyInfo;
 	}
-	public int getStockId() {
-		return stockId;
-	}
-	public void setStockId(int stockId) {
-		this.stockId = stockId;
-	}
-	
 	public StockInfo getStockInfo() {
 		return stockInfo;
 	}
@@ -187,10 +179,11 @@ public class CompanyInfo {
 				+ ", companyFax=" + companyFax + ", email=" + email
 				+ ", website=" + website + ", contacts=" + contacts
 				+ ", zipCode=" + zipCode + ", businessScope=" + businessScope
-				+ ", companyInfo=" + companyInfo + ", stockId=" + stockId
-				+ ", stockInfo=" + stockInfo + ", managerList=" + managerList
-				+ ", participationList=" + participationList + "]";
+				+ ", companyInfo=" + companyInfo + ", stockInfo=" + stockInfo
+				+ ", managerList=" + managerList + ", participationList="
+				+ participationList + "]";
 	}
+	
 	
 	
 	

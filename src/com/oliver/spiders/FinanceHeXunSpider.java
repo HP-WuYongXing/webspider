@@ -27,17 +27,18 @@ public class FinanceHeXunSpider extends NewsSpider{
 
 	public static final String FOCUS_URL = "http://funds.hexun.com/";
 	public static final String STOCK_URL ="http://stock.hexun.com/";
+	private static final int URL_CODE=ConstantsForNewsItem.URL_HEXUN;
 	
 	@Override
 	public void executedRefreshFocus() {
-		this.excutedRefreshFocus(this, FOCUS_URL);
+		this.excutedRefreshFocus(this, URL_CODE);
 	}
 	
 	
 
 	@Override
 	public void executedRefreshStocks() {
-		this.excutedRefreshStocksNews(this, STOCK_URL);
+		this.excutedRefreshStocksNews(this, URL_CODE);
 	}
 
 
@@ -51,6 +52,7 @@ public class FinanceHeXunSpider extends NewsSpider{
 		int len = el_h2_list.size();
 		for(int i=0;i<len;i++){
 			NewsItem item = new NewsItem();
+			item.setUrlCode(URL_CODE);
 			item.setNewsType(ConstantsForNewsItem.NEWS_ITEM_KIND_FOCUS);
 			Element el_h2 = el_h2_list.get(i);
 			Element el_h2_a = el_h2.getElementsByTag("a").get(0);
@@ -145,6 +147,7 @@ public class FinanceHeXunSpider extends NewsSpider{
 		int size = el_a_list.size();
 		for(int i=0;i<size;i++){
 			NewsItem item = new NewsItem();
+			item.setUrlCode(URL_CODE);
 			Element el_a = el_a_list.get(i);
 			String str = el_a.text();
 			System.out.println("title: "+str);

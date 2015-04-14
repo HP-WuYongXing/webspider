@@ -21,6 +21,7 @@ import com.oliver.service.impl.ManagerService;
 import com.oliver.service.impl.ParticipationService;
 import com.oliver.service.impl.StockInfoService;
 import com.oliver.context.AppContext;
+import com.oliver.context.BeanLocator;
 import com.oliver.http.DataUtils;
 
 public class StockCompanyCommonInfoSpider {
@@ -34,15 +35,18 @@ public class StockCompanyCommonInfoSpider {
 	private static final int MANAGER_KIND_GG=1001;
 	private static final int MANAGER_KIND_DS=1002;
 	private static final int MANAGER_KIND_JS=1003;
-	private static AbstractApplicationContext context = AppContext.getContext();
+	//private static AbstractApplicationContext context = AppContext.getContext();
 	
 	public void refreshCompanyInfo(Stock stock){
-		
 		CompanyInfo info = getCompanyInfo(stock);
 		if(info==null)return;
+		String stockCode =stock.getCode();
+		if(checkIfExist(stockCode)){
+			updateCompanyInfo(info);
+		}else{
+			saveCompanyInfo(info);
+		}
 		
-		info.setStockId(stock.getId());
-		saveCompanyInfo(info);
 		StockInfo stockInfo = info.getStockInfo();
 		stockInfo.setCompanyId(info.getId());
 		saveStockInfo(stockInfo);
@@ -65,25 +69,37 @@ public class StockCompanyCommonInfoSpider {
 		
 	}
 	
+	private boolean checkIfExist(String stockCode){
+		CompanyInfoService ciService = (CompanyInfoService)BeanLocator.getBean("companyInfoService");
+		CompanyInfo existInfo = ciService.getByStockCode(stockCode);
+		return existInfo==null;
+	}
 	
+	
+	private void updateCompanyInfo(CompanyInfo info) {
+		CompanyInfoService ciService = (CompanyInfoService)BeanLocator.getBean("companyInfoService");
+		
+	}
+
+
 	private void saveParticipation(Participation p){
-		ParticipationService service = (ParticipationService)context.getBean("participationService");
+		ParticipationService service = (ParticipationService)BeanLocator.getBean("participationService");
 		service.addParticipation(p);
 	}
 	
 	private void saveManager(Manager m){
-		ManagerService service = (ManagerService)context.getBean("managerService");
+		ManagerService service = (ManagerService)BeanLocator.getBean("managerService");
 		service.addManager(m);
 	}
 	
 	
 	private void saveStockInfo(StockInfo stockInfo) {
-		StockInfoService service = (StockInfoService)context.getBean("stockInfoService");
+		StockInfoService service = (StockInfoService)BeanLocator.getBean("stockInfoService");
 		service.addStockInfo(stockInfo);
 	}
 
 	public void saveCompanyInfo(CompanyInfo info){
-		CompanyInfoService service =(CompanyInfoService)context.getBean("companyInfoService");
+		CompanyInfoService service =(CompanyInfoService)BeanLocator.getBean("companyInfoService");
 		service.addCompanyInfo(info);
 	}
 	

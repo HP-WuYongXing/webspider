@@ -32,15 +32,14 @@ public class CompanyInfoProvider {
 	    VALUES("zip_code","#{zipCode}");
 	    VALUES("business_scope","#{businessScope}");
 	    VALUES("company_info","#{companyInfo}");
-	    VALUES("stock_id","#{stockId}");
 	    return SQL();
 	}
 	
-	public String selectByStockIdSql(){
+	public String selectByStockCodeSql(){
 		BEGIN();
 		SELECT("*");
 		FROM(TABLE_NAME);
-		WHERE("stock_id=#{0}");
+		WHERE("stock_code=#{0}");
 		return SQL();
 	}
 }

@@ -8,4 +8,5 @@ public interface IStockDao {
 	public void insertStock(Stock stock);
 	public List<Stock> selectAll();
 	public void deleteAll();
+	public List<Stock>selectListByType(int type);
 }

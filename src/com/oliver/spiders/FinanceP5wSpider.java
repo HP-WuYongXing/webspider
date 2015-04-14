@@ -17,10 +17,11 @@ import com.oliver.http.DataUtils;
 public class FinanceP5wSpider extends NewsSpider {
 
     public static final String FOCUS_URL="http://www.p5w.net/stock/news/zqyw/";
+    private static final int URL_CODE=ConstantsForNewsItem.URL_P5W;
     
 	@Override
 	public void executedRefreshFocus() {
-		this.excutedRefreshFocus(this,FOCUS_URL);
+		this.excutedRefreshFocus(this,URL_CODE);
 	}
 
 	@Override
@@ -39,6 +40,7 @@ public class FinanceP5wSpider extends NewsSpider {
 		System.out.println("size: "+size);
 		for(int i=0;i<size;i++){
 			NewsItem item = new NewsItem();
+			item.setUrlCode(URL_CODE);
 			item.setNewsType(ConstantsForNewsItem.NEWS_ITEM_KIND_FOCUS);
 			Element el_h2_title =el_h2_title_list.get(i);
 			Element el_h2_title_a = el_h2_title.getElementsByTag("a").get(0);
@@ -94,11 +96,11 @@ public class FinanceP5wSpider extends NewsSpider {
 			Element el_text_p = el_text_p_list.get(i);
 			str = el_text_p.text();
 			if(str.length()>2){
-				order = this.addParagraph(el_text_p, parList, order);
+				order = addParagraph(el_text_p, parList, order);
 			}
 			Elements el_text_p_img_list = el_text_p.getElementsByTag("img");
 			if(el_text_p_img_list.size()>0){
-				order = this.savePictures(el_text_p_img_list, picList, order,linkUrl);
+				order = savePictures(el_text_p_img_list, picList, order,linkUrl);
 			}
 		}
 		System.out.println("parList size:"+parList.size());

@@ -13,7 +13,7 @@ public interface ICompanyInfoMapper {
 	@SelectKey(keyProperty="id",keyColumn="id", before = false, resultType = int.class, statement = { "SELECT LAST_INSERT_ID() AS ID" })
     public void insertCompanyInfo(CompanyInfo ci);
 	
-	@SelectProvider(type = CompanyInfoProvider.class,method="selectByStockIdSql")
+	@SelectProvider(type = CompanyInfoProvider.class,method="selectByStockCodeSql")
 	@Results(value={
 			@Result(id=true,property="id",column="id"),
 			@Result(property="abbreviation",column="abbreviation"),
@@ -34,8 +34,6 @@ public interface ICompanyInfoMapper {
 			@Result(property="contacts",column="contacts"),
 			@Result(property="zipCode",column="zip_code"),
 			@Result(property="businessScope",column="business_scope"),
-			@Result(property="companyInfo",column="company_info"),
-			@Result(property="stockId",column="stock_id")
-	})
-	public CompanyInfo selectByStockId(int stockId);
+			@Result(property="companyInfo",column="company_info")})
+	public CompanyInfo selectByStockCode(String stockCode);
 }

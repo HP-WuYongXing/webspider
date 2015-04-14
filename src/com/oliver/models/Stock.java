@@ -5,6 +5,8 @@ public class Stock {
 	private int id;
 	private String code;
 	private String name;
+	private String prefix;
+	private int type;
 	public int getId() {
 		return id;
 	}
@@ -25,9 +27,28 @@ public class Stock {
 		this.name = name;
 	}
 	
+	public String getPrefix() {
+		return prefix;
+	}
+	public void setPrefix(String prefix) {
+		this.prefix = prefix;
+	}
+	
+	
+	public int getType() {
+		return type;
+	}
+	
+	public void setType(int type) {
+		this.type = type;
+	}
+	
 	@Override
 	public String toString() {
-		return "Stock [id=" + id + ", code=" + code + ", name=" + name + "]";
+		return "Stock [id=" + id + ", code=" + code + ", name=" + name
+				+ ", prefix=" + prefix + ", type=" + type + "]";
 	}
+	
+	
 	
 }

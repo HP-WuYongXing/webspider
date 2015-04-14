@@ -28,6 +28,7 @@ public class NewsItemService implements INewsItemService {
 	@Override
 	public void addNewsItemList(List<NewsItem> list) {
 		for(NewsItem i:list){
+			System.out.println("newsItem service: "+i);
 			itemDao.insertNewsItem(i);
 		}
 		
@@ -57,8 +58,8 @@ public class NewsItemService implements INewsItemService {
 
 
 	@Override
-	public void deleteWithUrlAndType(String url, int type) {
-		itemDao.deleteWithUrlAndType("%"+url+"%", type);
+	public void deleteByTypeAndUrlCode(int type, int urlCode) {
+		itemDao.deleteByTypeAndUrlCode(type, urlCode);
 	}
 
 	@Override
@@ -80,6 +81,11 @@ public class NewsItemService implements INewsItemService {
 	@Override
 	public List<NewsItem> getLIstByTypeAtOffset(int offset, int limit, int type) {
 		return itemDao.selectListByTypeAtOffset(offset, limit, type);
+	}
+
+	@Override
+	public List<NewsItem> getListByTypeAndUrlCode(int type, int urlCode) {
+		return itemDao.selectByTypeAndUrlCode(type,urlCode);
 	}
 	
 	
